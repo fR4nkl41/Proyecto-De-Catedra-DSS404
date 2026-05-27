@@ -47,10 +47,32 @@
     <div class="mb-3">
         <label>Estado</label>
 
-        <input type="text"
-               name="estado"
-               class="form-control"
-               value="{{ $inscripcion->estado }}">
+        <select name="estado"
+        class="form-select"
+        required>
+
+    <option value="Activa"
+        {{ $inscripcion->estado == 'Activa' ? 'selected' : '' }}>
+
+        Activa
+
+    </option>
+
+    <option value="Pendiente"
+        {{ $inscripcion->estado == 'Pendiente' ? 'selected' : '' }}>
+
+        Pendiente
+
+    </option>
+
+    <option value="Cancelada"
+        {{ $inscripcion->estado == 'Cancelada' ? 'selected' : '' }}>
+
+        Cancelada
+
+    </option>
+
+</select>
     </div>
 
     <button type="submit"
