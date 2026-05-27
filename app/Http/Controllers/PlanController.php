@@ -21,11 +21,13 @@ class PlanController extends Controller
 
     public function store(Request $request)
     {
-        Plan::create([
-            'nombre_plan' => $request->nombre_plan,
-            'descripcion' => $request->descripcion,
-            'precio' => $request->precio
-        ]);
+        $plan = new Plan();
+
+        $plan->nombre_plan = $request->input('nombre_plan');
+        $plan->descripcion = $request->input('descripcion');
+        $plan->precio = $request->input('precio');
+
+        $plan->save();
 
         return redirect()->route('planes.index');
     }
@@ -41,11 +43,11 @@ class PlanController extends Controller
     {
         $plan = Plan::findOrFail($id);
 
-        $plan->update([
-            'nombre_plan' => $request->nombre_plan,
-            'descripcion' => $request->descripcion,
-            'precio' => $request->precio
-        ]);
+        $plan->nombre_plan = $request->input('nombre_plan');
+        $plan->descripcion = $request->input('descripcion');
+        $plan->precio = $request->input('precio');
+
+        $plan->save();
 
         return redirect()->route('planes.index');
     }

@@ -30,15 +30,17 @@ class HorarioController extends Controller
      */
     public function store(Request $request)
     {
-        Horario::create([
-            'actividad' => $request->actividad,
-            'dia' => $request->dia,
-            'hora_inicio' => $request->hora_inicio,
-            'hora_fin' => $request->hora_fin,
-            'id_entrenador' => $request->id_entrenador
-        ]);
+        $horario = new Horario();
 
-        return redirect()->route('horarios.index');  
+        $horario->actividad = $request->input('actividad');
+        $horario->dia = $request->input('dia');
+        $horario->hora_inicio = $request->input('hora_inicio');
+        $horario->hora_fin = $request->input('hora_fin');
+        $horario->id_entrenador = $request->input('id_entrenador');
+
+        $horario->save();
+
+        return redirect()->route('horarios.index');
     }
 
     /**
@@ -62,17 +64,17 @@ class HorarioController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         $horario = Horario::findOrFail($id);
 
-        $horario->update([
-            'actividad' => $request->actividad,
-            'dia' => $request->dia,
-            'hora_inicio' => $request->hora_inicio,
-            'hora_fin' => $request->hora_fin,
-            'id_entrenador' => $request->id_entrenador
-        ]);
+        $horario->actividad = $request->input('actividad');
+        $horario->dia = $request->input('dia');
+        $horario->hora_inicio = $request->input('hora_inicio');
+        $horario->hora_fin = $request->input('hora_fin');
+        $horario->id_entrenador = $request->input('id_entrenador');
+
+        $horario->save();
 
         return redirect()->route('horarios.index');
     }

@@ -30,12 +30,14 @@ class InscripcionController extends Controller
      */
     public function store(Request $request)
     {
-        Inscripcion::create([
-            'id_usuario' => $request->id_usuario,
-            'id_plan' => $request->id_plan,
-            'fecha_inicio' => $request->fecha_inicio,
-            'estado' => $request->estado
-        ]);
+        $inscripcion = new Inscripcion();
+
+        $inscripcion->id_usuario = $request->input('id_usuario');
+        $inscripcion->id_plan = $request->input('id_plan');
+        $inscripcion->fecha_inicio = $request->input('fecha_inicio');
+        $inscripcion->estado = $request->input('estado');
+
+        $inscripcion->save();
 
         return redirect()->route('inscripciones.index');
     }
@@ -61,16 +63,16 @@ class InscripcionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         $inscripcion = Inscripcion::findOrFail($id);
 
-        $inscripcion->update([
-            'id_usuario' => $request->id_usuario,
-            'id_plan' => $request->id_plan,
-            'fecha_inicio' => $request->fecha_inicio,
-            'estado' => $request->estado
-        ]);
+        $inscripcion->id_usuario = $request->input('id_usuario');
+        $inscripcion->id_plan = $request->input('id_plan');
+        $inscripcion->fecha_inicio = $request->input('fecha_inicio');
+        $inscripcion->estado = $request->input('estado');
+
+        $inscripcion->save();
 
         return redirect()->route('inscripciones.index');
     }
