@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Inscripcion;
 use Illuminate\Http\Request;
 
 class InscripcionController extends Controller
@@ -11,7 +12,9 @@ class InscripcionController extends Controller
      */
     public function index()
     {
-        //
+        $inscripciones = Inscripcion::all();
+
+        return view('inscripciones.index', compact('inscripciones'));
     }
 
     /**
@@ -19,7 +22,7 @@ class InscripcionController extends Controller
      */
     public function create()
     {
-        //
+        return view('inscripciones.create');
     }
 
     /**
@@ -27,7 +30,14 @@ class InscripcionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Inscripcion::create([
+            'id_usuario' => $request->id_usuario,
+            'id_plan' => $request->id_plan,
+            'fecha_inicio' => $request->fecha_inicio,
+            'estado' => $request->estado
+        ]);
+
+        return redirect()->route('inscripciones.index');
     }
 
     /**
@@ -43,7 +53,9 @@ class InscripcionController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $inscripcion = Inscripcion::findOrFail($id);
+
+        return view('inscripciones.edit', compact('inscripcion'));
     }
 
     /**
@@ -51,7 +63,16 @@ class InscripcionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $inscripcion = Inscripcion::findOrFail($id);
+
+        $inscripcion->update([
+            'id_usuario' => $request->id_usuario,
+            'id_plan' => $request->id_plan,
+            'fecha_inicio' => $request->fecha_inicio,
+            'estado' => $request->estado
+        ]);
+
+        return redirect()->route('inscripciones.index');
     }
 
     /**
@@ -59,6 +80,11 @@ class InscripcionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $inscripcion = Inscripcion::findOrFail($id);
+
+        $inscripcion->delete();
+
+        return redirect()->route('inscripciones.index');
+    
     }
 }
