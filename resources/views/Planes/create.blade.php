@@ -29,7 +29,10 @@
 
     <div class="mb-3">
         <label>Nombre</label>
-        <input type="text" name="nombre_plan" class="form-control">
+        <input type="text" 
+               name="nombre_plan" 
+               class="form-control"
+               require>
     </div>
 
     <div class="mb-3">
@@ -39,8 +42,13 @@
 
     <div class="mb-3">
         <label>Precio</label>
-        <input type="number" step="0.01" name="precio" class="form-control">
-    </div>
+            <input type="number"
+                name="precio"
+                class="form-control"
+                min="1"
+                max="1000"
+                step="0.01">   
+             </div>
 
     <button type="submit" class="btn btn-success">
         Guardar

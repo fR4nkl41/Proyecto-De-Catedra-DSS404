@@ -7,6 +7,15 @@
     <a href="{{ route('planes.create') }}" class="btn btn-primary mb-3">
         Nuevo Plan
     </a>
+    @if(session('success'))
+
+<div class="alert alert-success">
+
+    {{ session('success') }}
+
+</div>
+
+@endif
 
     <table class="table table-bordered">
         <thead>
@@ -38,7 +47,7 @@
                         @csrf
                         @method('DELETE')
 
-                        <button type="submit" class="btn btn-danger btn-sm">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que deseas eliminar?')">
                             Eliminar
                         </button>
                     </form>

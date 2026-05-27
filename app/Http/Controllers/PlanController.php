@@ -34,7 +34,8 @@ class PlanController extends Controller
 
         $plan->save();
 
-        return redirect()->route('planes.index');
+        return redirect()->route('planes.index')
+                 ->with('success', 'Plan agregado correctamente');
     }
 
     public function edit($id)
@@ -59,7 +60,8 @@ class PlanController extends Controller
 
         $plan->save();
 
-        return redirect()->route('planes.index');
+        return redirect()->route('planes.index')
+                 ->with('success', 'Plan actualizado');
     }
 
     public function destroy($id)
@@ -68,6 +70,7 @@ class PlanController extends Controller
 
         $plan->delete();
 
-        return redirect()->route('planes.index');
+        return redirect()->route('planes.index')
+                 ->with('success', 'Plan eliminado');
     }
 }

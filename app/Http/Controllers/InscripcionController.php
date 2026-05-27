@@ -35,6 +35,7 @@ class InscripcionController extends Controller
             'id_plan' => 'required',
             'fecha_inicio' => 'required'
         ]);
+        
         $inscripcion = new Inscripcion();
 
         $inscripcion->id_usuario = $request->input('id_usuario');
@@ -44,7 +45,8 @@ class InscripcionController extends Controller
 
         $inscripcion->save();
 
-        return redirect()->route('inscripciones.index');
+        return redirect()->route('inscripciones.index')
+                 ->with('success', 'Inscripción agregada');
     }
 
     /**
@@ -84,7 +86,8 @@ class InscripcionController extends Controller
 
         $inscripcion->save();
 
-        return redirect()->route('inscripciones.index');
+        return redirect()->route('inscripciones.index')
+                 ->with('success', 'Inscripción actualizada');
     }
 
     /**
@@ -96,7 +99,8 @@ class InscripcionController extends Controller
 
         $inscripcion->delete();
 
-        return redirect()->route('inscripciones.index');
+       return redirect()->route('inscripciones.index')
+                 ->with('success', 'Inscripción eliminada');
     
     }
 }

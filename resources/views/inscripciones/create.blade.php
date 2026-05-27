@@ -34,7 +34,8 @@
 
         <input type="number"
                name="id_usuario"
-               class="form-control">
+               class="form-control"
+               require>
     </div>
 
     <div class="mb-3">
@@ -42,7 +43,8 @@
 
         <input type="number"
                name="id_plan"
-               class="form-control">
+               class="form-control"
+               require>
     </div>
 
     <div class="mb-3">
@@ -50,15 +52,22 @@
 
         <input type="date"
                name="fecha_inicio"
-               class="form-control">
+               class="form-control"
+               min="{{ date('Y-m-d') }}">
     </div>
 
     <div class="mb-3">
         <label>Estado</label>
 
-        <input type="text"
-               name="estado"
-               class="form-control">
+        <select name="estado" class="form-select">
+
+            <option value="Activa">Activa</option>
+
+            <option value="Pendiente">Pendiente</option>
+
+            <option value="Cancelada">Cancelada</option>
+
+        </select>
     </div>
 
     <button type="submit"

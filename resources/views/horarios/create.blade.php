@@ -31,25 +31,135 @@
     <div class="mb-3">
         <label>Actividad</label>
 
-        <input type="text"
-               name="actividad"
-               class="form-control">
+        <select name="actividad"
+        class="form-select"
+        required>
+
+    <option value="">
+        Seleccione actividad
+    </option>
+
+    <option value="Spinning">
+        Spinning
+    </option>
+
+    <option value="CrossFit">
+        CrossFit
+    </option>
+
+    <option value="Cardio HIIT">
+        Cardio HIIT
+    </option>
+
+    <option value="Entrenamiento Funcional">
+        Entrenamiento Funcional
+    </option>
+
+    <option value="Pesas">
+        Pesas
+    </option>
+
+    <option value="Yoga">
+        Yoga
+    </option>
+
+    <option value="Pilates">
+        Pilates
+    </option>
+
+    <option value="Zumba">
+        Zumba
+    </option>
+
+    <option value="Boxeo">
+        Boxeo
+    </option>
+
+    <option value="Kickboxing">
+        Kickboxing
+    </option>
+
+    <option value="TRX">
+        TRX
+    </option>
+
+    <option value="Calistenia">
+        Calistenia
+    </option>
+
+    <option value="Body Combat">
+        Body Combat
+    </option>
+
+    <option value="Body Pump">
+        Body Pump
+    </option>
+
+    <option value="Natación">
+        Natación
+    </option>
+
+    <option value="Aeróbicos">
+        Aeróbicos
+    </option>
+
+    <option value="Powerlifting">
+        Powerlifting
+    </option>
+
+    <option value="Musculación">
+        Musculación
+    </option>
+
+    <option value="Cardio">
+        Cardio
+    </option>
+
+    <option value="Asesoría Personalizada">
+        Asesoría Personalizada
+    </option>
+
+    <option value="Entrenamiento de Resistencia">
+        Entrenamiento de Resistencia
+    </option>
+
+    <option value="Circuito Funcional">
+        Circuito Funcional
+    </option>
+
+    <option value="Stretching">
+        Stretching
+    </option>
+
+    <option value="Baile Fitness">
+        Baile Fitness
+    </option>
+
+</select>
     </div>
 
     <div class="mb-3">
-        <label>Día</label>
+        <label>Días</label>
+        <select name="dia" class="form-select">
 
-        <input type="text"
-               name="dia"
-               class="form-control">
+            <option value="Lunes">Lunes</option>
+            <option value="Martes">Martes</option>
+            <option value="Miércoles">Miércoles</option>
+            <option value="Jueves">Jueves</option>
+            <option value="Viernes">Viernes</option>
+            <option value="Sábado">Sábado</option>
+
+        </select>
     </div>
 
     <div class="mb-3">
         <label>Hora Inicio</label>
 
-        <input type="time"
-               name="hora_inicio"
-               class="form-control">
+       <input type="time"
+       name="hora_inicio"
+       class="form-control"
+       min="06:00"
+       max="22:00">
     </div>
 
     <div class="mb-3">
@@ -57,7 +167,8 @@
 
         <input type="time"
                name="hora_fin"
-               class="form-control">
+               class="form-control"
+               require>
     </div>
 
     <div class="mb-3">

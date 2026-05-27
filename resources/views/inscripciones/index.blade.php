@@ -17,6 +17,15 @@
         Nueva Inscripción
 
     </a>
+    @if(session('success'))
+
+<div class="alert alert-success">
+
+    {{ session('success') }}
+
+</div>
+
+@endif
 
     <table class="table table-bordered">
 
@@ -60,7 +69,8 @@
                         @method('DELETE')
 
                         <button type="submit"
-                                class="btn btn-danger btn-sm">
+                                class="btn btn-danger btn-sm"
+                                onclick="return confirm('¿Seguro que deseas eliminar?')">
 
                             Eliminar
 

@@ -46,7 +46,9 @@ class HorarioController extends Controller
 
         $horario->save();
 
-        return redirect()->route('horarios.index');
+       return redirect()->route('horarios.index')
+                 ->with('success', 'Horario agregado');
+
     }
 
     /**
@@ -88,7 +90,8 @@ class HorarioController extends Controller
 
         $horario->save();
 
-        return redirect()->route('horarios.index');
+       return redirect()->route('horarios.index')
+                 ->with('success', 'Horario actualizado');
     }
 
     /**
@@ -100,6 +103,7 @@ class HorarioController extends Controller
 
         $horario->delete();
 
-        return redirect()->route('horarios.index');
+        return redirect()->route('horarios.index')
+                 ->with('success', 'Horario eliminado');
     }
 }
