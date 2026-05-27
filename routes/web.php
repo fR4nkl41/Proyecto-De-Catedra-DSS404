@@ -2,10 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PlanController;
+use App\Http\Controllers\HorarioController;
+use App\Http\Controllers\InscripcionController;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('inicio');
+
+Route::resource('planes', PlanController::class);
+Route::resource('horarios', HorarioController::class);
+Route::resource('inscripciones', InscripcionController::class);
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);

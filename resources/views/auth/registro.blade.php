@@ -26,20 +26,15 @@
                         @csrf
                         <div class="mb-3">
                             <label>Nombre completo</label>
-                            <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
-                        </div>
-                        <div class="mb-3">
+                            <input type="text" name="nombre" class="form-control" value="{{ old('nombre') }}" required>                        <div class="mb-3">
                             <label>Correo electrónico</label>
-                            <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
-                        </div>
+                            <input type="email" name="correo" class="form-control" value="{{ old('correo') }}" required>                        </div>
                         <div class="mb-3">
                             <label>Contraseña</label>
-                            <input type="password" name="password" class="form-control" required>
-                        </div>
+                            <input type="password" name="contrasena" class="form-control" required>                        </div>
                         <div class="mb-3">
                             <label>Confirmar contraseña</label>
-                            <input type="password" name="password_confirmation" class="form-control" required>
-                        </div>
+                            <input type="password" name="contrasena_confirmation" class="form-control" required>                        </div>
                         <button type="submit" class="btn btn-warning w-100">Registrarse</button>
                     </form>
 
