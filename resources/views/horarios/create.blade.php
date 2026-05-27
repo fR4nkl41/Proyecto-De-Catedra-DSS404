@@ -11,6 +11,19 @@
 
 <h1>Nuevo Horario</h1>
 
+@if($errors->any())
+
+<div class="alert alert-danger">
+
+    @foreach($errors->all() as $error)
+
+        <p>{{ $error }}</p>
+
+    @endforeach
+
+</div>
+
+@endif
 <form action="{{ route('horarios.store') }}" method="POST">
 
     @csrf

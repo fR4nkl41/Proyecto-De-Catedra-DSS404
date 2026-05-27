@@ -30,6 +30,12 @@ class HorarioController extends Controller
      */
     public function store(Request $request)
     {
+            $request->validate([
+            'actividad' => 'required',
+            'dia' => 'required',
+            'hora_inicio' => 'required',
+            'hora_fin' => 'required'
+        ]);
         $horario = new Horario();
 
         $horario->actividad = $request->input('actividad');
@@ -66,6 +72,12 @@ class HorarioController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+        'actividad' => 'required',
+        'dia' => 'required',
+        'hora_inicio' => 'required',
+        'hora_fin' => 'required'
+    ]);
         $horario = Horario::findOrFail($id);
 
         $horario->actividad = $request->input('actividad');

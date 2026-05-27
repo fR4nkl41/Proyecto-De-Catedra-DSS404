@@ -7,12 +7,13 @@ use App\Http\Controllers\HorarioController;
 use App\Http\Controllers\InscripcionController;
 
 Route::get('/', function () {
-    return view('welcome');
-})->name('inicio');
+    return redirect()->route('login');
+});
 
 Route::resource('planes', PlanController::class);
 Route::resource('horarios', HorarioController::class);
 Route::resource('inscripciones', InscripcionController::class);
+
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);

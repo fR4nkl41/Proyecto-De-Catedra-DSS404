@@ -30,6 +30,11 @@ class InscripcionController extends Controller
      */
     public function store(Request $request)
     {
+            $request->validate([
+            'id_usuario' => 'required',
+            'id_plan' => 'required',
+            'fecha_inicio' => 'required'
+        ]);
         $inscripcion = new Inscripcion();
 
         $inscripcion->id_usuario = $request->input('id_usuario');
@@ -65,6 +70,11 @@ class InscripcionController extends Controller
      */
     public function update(Request $request, $id)
     {
+       $request->validate([
+        'id_usuario' => 'required',
+        'id_plan' => 'required',
+        'fecha_inicio' => 'required'
+    ]);
         $inscripcion = Inscripcion::findOrFail($id);
 
         $inscripcion->id_usuario = $request->input('id_usuario');

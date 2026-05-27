@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class PlanController extends Controller
 {
+    
     public function index()
     {
         $planes = Plan::all();
@@ -21,6 +22,10 @@ class PlanController extends Controller
 
     public function store(Request $request)
     {
+         $request->validate([
+            'nombre_plan' => 'required',
+            'precio' => 'required'
+        ]);
         $plan = new Plan();
 
         $plan->nombre_plan = $request->input('nombre_plan');
@@ -41,6 +46,11 @@ class PlanController extends Controller
 
     public function update(Request $request, $id)
     {
+            $request->validate([
+        'nombre_plan' => 'required',
+        'precio' => 'required'
+    ]);
+
         $plan = Plan::findOrFail($id);
 
         $plan->nombre_plan = $request->input('nombre_plan');

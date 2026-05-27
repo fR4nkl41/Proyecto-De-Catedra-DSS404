@@ -10,6 +10,19 @@
 
 <h1>Nuevo Plan</h1>
 
+@if($errors->any())
+
+    <div class="alert alert-danger">
+
+        @foreach($errors->all() as $error)
+
+            <p>{{ $error }}</p>
+
+        @endforeach
+
+    </div>
+
+@endif
 <form action="{{ route('planes.store') }}" method="POST">
 
     @csrf
