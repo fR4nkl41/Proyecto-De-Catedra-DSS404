@@ -1,189 +1,82 @@
-<!DOCTYPE html>
-<html>
-<head>
+@extends('layouts.app')
 
-    <title>Editar Entrenador</title>
+@section('title', 'Editar Entrenador - IronPulse Gym')
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+@section('content')
+<div class="w-full max-w-2xl mx-auto px-4 animate-fade-in">
 
-</head>
+    <!-- Tarjeta del Formulario Oscura Premium -->
+    <div class="bg-[#0f0f12]/95 border border-gray-900 rounded-2xl p-8 shadow-[0_25px_60px_rgba(0,0,0,0.8)] backdrop-blur-md">
 
-<body>
+        <!-- Encabezado del Formulario -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-black tracking-tight text-white uppercase font-sport">
+                MODIFICAR <span class="text-red-600 text-shadow-red">ENTRENADOR</span>
+            </h2>
+            <p class="text-xs text-gray-500 uppercase tracking-wider mt-1">Actualiza las credenciales del miembro del staff</p>
+        </div>
 
-<div class="container mt-5">
+        <!-- Alertas de Errores por si falla la validación en Laravel -->
+        @if($errors->any())
+            <div class="mb-6 bg-red-950/40 border border-red-800/60 text-red-400 p-4 rounded-xl text-sm space-y-1">
+                @foreach($errors->all() as $error)
+                    <p class="flex items-center"><span class="mr-2 text-red-500">•</span> {{ $error }}</p>
+                @endforeach
+            </div>
+        @endif
 
-<h1>Editar Entrenador</h1>
+        @php
+            // Captura segura de la variable para evitar errores de compilación de Blade
+            $item = $entrenador ?? $instructor ?? $entrenadores ?? null;
+            $id = $item ? ($item->id ?? $item->id_entrenador ?? null) : null;
+        @endphp
 
-@if($errors->any())
+        @if($item && $id)
+            <!-- Formulario principal con parámetros protegidos -->
+            <form method="POST" action="{{ route('entrenadores.update', $id) }}" class="space-y-6">
+                @csrf
+                @method('PUT')
 
-<div class="alert alert-danger">
+                <div class="grid grid-cols-1 gap-6">
 
-    @foreach($errors->all() as $error)
+                    <!-- Campo: Nombre Completo -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Nombre del Instructor</label>
+                        <input type="text" name="nombre" value="{{ old('nombre', $item->nombre ?? '') }}" required
+                            class="w-full bg-[#141418] text-white border border-gray-800 focus:border-red-600 focus:ring-1 focus:ring-red-600 focus:outline-none rounded-xl px-4 py-3.5 text-sm transition-all duration-200">
+                    </div>
 
-        <p>{{ $error }}</p>
+                    <!-- Campo: Especialidad Técnica -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Especialidad / Competencias</label>
+                        <input type="text" name="especialidad" value="{{ old('especialidad', $item->especialidad ?? '') }}" required
+                            class="w-full bg-[#141418] text-white border border-gray-800 focus:border-red-600 focus:ring-1 focus:ring-red-600 focus:outline-none rounded-xl px-4 py-3.5 text-sm transition-all duration-200">
+                    </div>
 
-    @endforeach
+                </div>
 
-</div>
+                <!-- Botones de Acción inferiores -->
+                <div class="flex items-center justify-end space-x-4 pt-6 border-t border-gray-900/60">
+                    <a href="{{ route('entrenadores.index') }}" class="text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-white transition-colors">
+                        Cancelar
+                    </a>
+                    <button type="submit"
+                        class="bg-red-600 hover:bg-red-700 active:scale-[0.98] text-white text-xs font-bold uppercase tracking-widest px-6 py-4 rounded-xl transition-all shadow-[0_4px_25px_rgba(220,38,38,0.25)] font-sport">
+                        ACTUALIZAR DETALLES
+                    </button>
+                </div>
 
-@endif
-
-<form action="{{ route('entrenadores.update', $entrenador->id_entrenador) }}"
-      method="POST">
-
-    @csrf
-    @method('PUT')
-
-    <div class="mb-3">
-
-        <label>Nombre</label>
-
-        <input type="text"
-               name="nombre"
-               class="form-control"
-               value="{{ $entrenador->nombre }}"
-               required>
-
-    </div>
-
-    <div class="mb-3">
-
-        <label>Especialidad</label>
-
-        <select name="especialidad"
-        class="form-select"
-        required>
-
-    <option value="">
-        Seleccione especialidad
-    </option>
-
-    <option value="Hipertrofia"
-        {{ isset($entrenador) && $entrenador->especialidad == 'Hipertrofia' ? 'selected' : '' }}>
-        Hipertrofia
-    </option>
-
-    <option value="Levantamiento de Potencia"
-        {{ isset($entrenador) && $entrenador->especialidad == 'Levantamiento de Potencia' ? 'selected' : '' }}>
-        Levantamiento de Potencia
-    </option>
-
-    <option value="Cardio HIIT"
-        {{ isset($entrenador) && $entrenador->especialidad == 'Cardio HIIT' ? 'selected' : '' }}>
-        Cardio HIIT
-    </option>
-
-    <option value="Spinning"
-        {{ isset($entrenador) && $entrenador->especialidad == 'Spinning' ? 'selected' : '' }}>
-        Spinning
-    </option>
-
-    <option value="CrossFit"
-        {{ isset($entrenador) && $entrenador->especialidad == 'CrossFit' ? 'selected' : '' }}>
-        CrossFit
-    </option>
-
-    <option value="Acondicionamiento Físico"
-        {{ isset($entrenador) && $entrenador->especialidad == 'Acondicionamiento Físico' ? 'selected' : '' }}>
-        Acondicionamiento Físico
-    </option>
-
-    <option value="Musculación"
-        {{ isset($entrenador) && $entrenador->especialidad == 'Musculación' ? 'selected' : '' }}>
-        Musculación
-    </option>
-
-    <option value="Entrenamiento Funcional"
-        {{ isset($entrenador) && $entrenador->especialidad == 'Entrenamiento Funcional' ? 'selected' : '' }}>
-        Entrenamiento Funcional
-    </option>
-
-    <option value="Yoga"
-        {{ isset($entrenador) && $entrenador->especialidad == 'Yoga' ? 'selected' : '' }}>
-        Yoga
-    </option>
-
-    <option value="Pilates"
-        {{ isset($entrenador) && $entrenador->especialidad == 'Pilates' ? 'selected' : '' }}>
-        Pilates
-    </option>
-
-    <option value="Zumba"
-        {{ isset($entrenador) && $entrenador->especialidad == 'Zumba' ? 'selected' : '' }}>
-        Zumba
-    </option>
-
-    <option value="Boxeo"
-        {{ isset($entrenador) && $entrenador->especialidad == 'Boxeo' ? 'selected' : '' }}>
-        Boxeo
-    </option>
-
-    <option value="Kickboxing"
-        {{ isset($entrenador) && $entrenador->especialidad == 'Kickboxing' ? 'selected' : '' }}>
-        Kickboxing
-    </option>
-
-    <option value="TRX"
-        {{ isset($entrenador) && $entrenador->especialidad == 'TRX' ? 'selected' : '' }}>
-        TRX
-    </option>
-
-    <option value="Calistenia"
-        {{ isset($entrenador) && $entrenador->especialidad == 'Calistenia' ? 'selected' : '' }}>
-        Calistenia
-    </option>
-
-    <option value="Nutrición Deportiva"
-        {{ isset($entrenador) && $entrenador->especialidad == 'Nutrición Deportiva' ? 'selected' : '' }}>
-        Nutrición Deportiva
-    </option>
-
-    <option value="Entrenamiento Personalizado"
-        {{ isset($entrenador) && $entrenador->especialidad == 'Entrenamiento Personalizado' ? 'selected' : '' }}>
-        Entrenamiento Personalizado
-    </option>
-
-    <option value="Rehabilitación Física"
-        {{ isset($entrenador) && $entrenador->especialidad == 'Rehabilitación Física' ? 'selected' : '' }}>
-        Rehabilitación Física
-    </option>
-
-    <option value="Resistencia Física"
-        {{ isset($entrenador) && $entrenador->especialidad == 'Resistencia Física' ? 'selected' : '' }}>
-        Resistencia Física
-    </option>
-
-    <option value="Body Combat"
-        {{ isset($entrenador) && $entrenador->especialidad == 'Body Combat' ? 'selected' : '' }}>
-        Body Combat
-    </option>
-
-    <option value="Body Pump"
-        {{ isset($entrenador) && $entrenador->especialidad == 'Body Pump' ? 'selected' : '' }}>
-        Body Pump
-    </option>
-
-</select>
+            </form>
+        @else
+            <!-- Estado alternativo de contingencia si no se reciben datos desde la ruta -->
+            <div class="text-center py-8 border border-dashed border-gray-800 rounded-xl">
+                <p class="text-sm text-gray-500 mb-4">No se pudieron recuperar los parámetros del entrenador seleccionado.</p>
+                <a href="{{ route('entrenadores.index') }}" class="inline-block bg-gray-800 text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-xl transition-colors">
+                    Regresar al listado
+                </a>
+            </div>
+        @endif
 
     </div>
-
-    <button type="submit"
-            class="btn btn-primary">
-
-        Actualizar
-
-    </button>
-
-    <a href="{{ route('entrenadores.index') }}"
-       class="btn btn-secondary">
-
-       Volver
-
-    </a>
-
-</form>
-
 </div>
-
-</body>
-</html>
+@endsection

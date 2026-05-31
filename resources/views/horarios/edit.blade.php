@@ -1,202 +1,105 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Editar Horario</title>
+@extends('layouts.app')
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+@section('title', 'Editar Horario - IronPulse Gym')
 
-<div class="container mt-5">
+@section('content')
+<div class="w-full max-w-2xl mx-auto px-4 animate-fade-in">
 
-<h1>Editar Horario</h1>
+    <!-- Tarjeta del Formulario Oscura Premium -->
+    <div class="bg-[#0f0f12]/95 border border-gray-900 rounded-2xl p-8 shadow-[0_25px_60px_rgba(0,0,0,0.8)] backdrop-blur-md">
 
-<form action="{{ route('horarios.update', $horario->id_horario) }}"
-      method="POST">
+        <!-- Encabezado del Formulario -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-black tracking-tight text-white uppercase font-sport">
+                EDITAR <span class="text-red-600 text-shadow-red">HORARIO</span>
+            </h2>
+            <p class="text-xs text-gray-500 uppercase tracking-wider mt-1">Modifica los detalles del bloque de tiempo seleccionado</p>
+        </div>
 
-    @csrf
-    @method('PUT')
+        <!-- Alertas de Errores por si falla la validación -->
+        @if($errors->any())
+            <div class="mb-6 bg-red-950/40 border border-red-800/60 text-red-400 p-4 rounded-xl text-sm space-y-1 shadow-[0_0_15px_rgba(220,38,38,0.1)]">
+                @foreach($errors->all() as $error)
+                    <p class="flex items-center"><span class="mr-2 text-red-500">•</span> {{ $error }}</p>
+                @endforeach
+            </div>
+        @endif
 
-    <div class="mb-3">
-        <label>Actividad</label>
+        <!-- Formulario apuntando a la ruta de actualización (update) -->
+        <form method="POST" action="{{ route('horarios.update', $horario->id ?? $horario->id_horario) }}" class="space-y-6">
+            @csrf
+            @method('PUT') <!-- Directiva obligatoria de Laravel para actualizar -->
 
-        <select name="actividad"
-        class="form-select"
-        required>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
-    <option value="">
-        Seleccione actividad
-    </option>
+                <!-- Campo: Actividad -->
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Actividad / Clase</label>
+                    <div class="relative">
+                        <select name="actividad" required
+                            class="w-full bg-[#141418] text-white border border-gray-800 focus:border-red-600 focus:ring-1 focus:ring-red-600 focus:outline-none rounded-xl px-4 py-3.5 text-sm transition-all duration-200 appearance-none cursor-pointer">
+                            <option value="Clase de Spinning" {{ old('actividad', $horario->actividad) == 'Clase de Spinning' ? 'selected' : '' }}>Clase de Spinning</option>
+                            <option value="Entrenamiento Funcional" {{ old('actividad', $horario->actividad) == 'Entrenamiento Funcional' ? 'selected' : '' }}>Entrenamiento Funcional</option>
+                            <option value="Asesoría de Pesas" {{ old('actividad', $horario->actividad) == 'Asesoría de Pesas' ? 'selected' : '' }}>Asesoría de Pesas</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-gray-500">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
+                </div>
 
-    <option value="Spinning"
-        {{ isset($horario) && $horario->actividad == 'Spinning' ? 'selected' : '' }}>
-        Spinning
-    </option>
+                <!-- Campo: Día -->
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Día de la Semana</label>
+                    <div class="relative">
+                        <select name="dia" required
+                            class="w-full bg-[#141418] text-white border border-gray-800 focus:border-red-600 focus:ring-1 focus:ring-red-600 focus:outline-none rounded-xl px-4 py-3.5 text-sm transition-all duration-200 appearance-none cursor-pointer">
+                            @foreach(['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'] as $diaSemana)
+                                <option value="{{ $diaSemana }}" {{ old('dia', $horario->dia) == $diaSemana ? 'selected' : '' }}>{{ $diaSemana }}</option>
+                            @endforeach
+                        </select>
+                        <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-gray-500">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
+                </div>
 
-    <option value="CrossFit"
-        {{ isset($horario) && $horario->actividad == 'CrossFit' ? 'selected' : '' }}>
-        CrossFit
-    </option>
+                <!-- Campo: Hora Inicio -->
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Hora Inicio</label>
+                    <input type="time" name="hora_inicio" value="{{ old('hora_inicio', $horario->hora_inicio) }}" required
+                        class="w-full bg-[#141418] text-white border border-gray-800 focus:border-red-600 focus:ring-1 focus:ring-red-600 focus:outline-none rounded-xl px-4 py-3.5 text-sm transition-all duration-200 font-sport [color-scheme:dark]">
+                </div>
 
-    <option value="Cardio HIIT"
-        {{ isset($horario) && $horario->actividad == 'Cardio HIIT' ? 'selected' : '' }}>
-        Cardio HIIT
-    </option>
+                <!-- Campo: Hora Fin -->
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Hora Fin</label>
+                    <input type="time" name="hora_fin" value="{{ old('hora_fin', $horario->hora_fin) }}" required
+                        class="w-full bg-[#141418] text-white border border-gray-800 focus:border-red-600 focus:ring-1 focus:ring-red-600 focus:outline-none rounded-xl px-4 py-3.5 text-sm transition-all duration-200 font-sport [color-scheme:dark]">
+                </div>
 
-    <option value="Entrenamiento Funcional"
-        {{ isset($horario) && $horario->actividad == 'Entrenamiento Funcional' ? 'selected' : '' }}>
-        Entrenamiento Funcional
-    </option>
+                <!-- Campo: ID Entrenador -->
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">ID Entrenador Asignado</label>
+                    <input type="number" name="id_entrenador" value="{{ old('id_entrenador', $horario->id_entrenador ?? $horario->entrenador) }}" required
+                        class="w-full bg-[#141418] text-white border border-gray-800 focus:border-red-600 focus:ring-1 focus:ring-red-600 focus:outline-none rounded-xl px-4 py-3.5 text-sm transition-all duration-200 font-sport">
+                </div>
 
-    <option value="Pesas"
-        {{ isset($horario) && $horario->actividad == 'Pesas' ? 'selected' : '' }}>
-        Pesas
-    </option>
+            </div>
 
-    <option value="Yoga"
-        {{ isset($horario) && $horario->actividad == 'Yoga' ? 'selected' : '' }}>
-        Yoga
-    </option>
+            <!-- Botones de Acción inferiores -->
+            <div class="flex items-center justify-end space-x-4 pt-6 border-t border-gray-900/60">
+                <a href="{{ route('horarios.index') }}" class="text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-white transition-colors">
+                    Cancelar
+                </a>
+                <button type="submit"
+                    class="bg-red-600 hover:bg-red-700 active:scale-[0.98] text-white text-xs font-bold uppercase tracking-widest px-6 py-4 rounded-xl transition-all shadow-[0_4px_25px_rgba(220,38,38,0.25)] font-sport">
+                    ACTUALIZAR HORARIO
+                </button>
+            </div>
 
-    <option value="Pilates"
-        {{ isset($horario) && $horario->actividad == 'Pilates' ? 'selected' : '' }}>
-        Pilates
-    </option>
+        </form>
 
-    <option value="Zumba"
-        {{ isset($horario) && $horario->actividad == 'Zumba' ? 'selected' : '' }}>
-        Zumba
-    </option>
-
-    <option value="Boxeo"
-        {{ isset($horario) && $horario->actividad == 'Boxeo' ? 'selected' : '' }}>
-        Boxeo
-    </option>
-
-    <option value="Kickboxing"
-        {{ isset($horario) && $horario->actividad == 'Kickboxing' ? 'selected' : '' }}>
-        Kickboxing
-    </option>
-
-    <option value="TRX"
-        {{ isset($horario) && $horario->actividad == 'TRX' ? 'selected' : '' }}>
-        TRX
-    </option>
-
-    <option value="Calistenia"
-        {{ isset($horario) && $horario->actividad == 'Calistenia' ? 'selected' : '' }}>
-        Calistenia
-    </option>
-
-    <option value="Body Combat"
-        {{ isset($horario) && $horario->actividad == 'Body Combat' ? 'selected' : '' }}>
-        Body Combat
-    </option>
-
-    <option value="Body Pump"
-        {{ isset($horario) && $horario->actividad == 'Body Pump' ? 'selected' : '' }}>
-        Body Pump
-    </option>
-
-    <option value="Natación"
-        {{ isset($horario) && $horario->actividad == 'Natación' ? 'selected' : '' }}>
-        Natación
-    </option>
-
-    <option value="Aeróbicos"
-        {{ isset($horario) && $horario->actividad == 'Aeróbicos' ? 'selected' : '' }}>
-        Aeróbicos
-    </option>
-
-    <option value="Powerlifting"
-        {{ isset($horario) && $horario->actividad == 'Powerlifting' ? 'selected' : '' }}>
-        Powerlifting
-    </option>
-
-    <option value="Musculación"
-        {{ isset($horario) && $horario->actividad == 'Musculación' ? 'selected' : '' }}>
-        Musculación
-    </option>
-
-    <option value="Cardio"
-        {{ isset($horario) && $horario->actividad == 'Cardio' ? 'selected' : '' }}>
-        Cardio
-    </option>
-
-    <option value="Asesoría Personalizada"
-        {{ isset($horario) && $horario->actividad == 'Asesoría Personalizada' ? 'selected' : '' }}>
-        Asesoría Personalizada
-    </option>
-
-    <option value="Entrenamiento de Resistencia"
-        {{ isset($horario) && $horario->actividad == 'Entrenamiento de Resistencia' ? 'selected' : '' }}>
-        Entrenamiento de Resistencia
-    </option>
-
-    <option value="Circuito Funcional"
-        {{ isset($horario) && $horario->actividad == 'Circuito Funcional' ? 'selected' : '' }}>
-        Circuito Funcional
-    </option>
-
-    <option value="Stretching"
-        {{ isset($horario) && $horario->actividad == 'Stretching' ? 'selected' : '' }}>
-        Stretching
-    </option>
-
-    <option value="Baile Fitness"
-        {{ isset($horario) && $horario->actividad == 'Baile Fitness' ? 'selected' : '' }}>
-        Baile Fitness
-    </option>
-
-</select>
     </div>
-
-    <div class="mb-3">
-        <label>Día</label>
-
-        <input type="text"
-               name="dia"
-               class="form-control"
-               value="{{ $horario->dia }}">
-    </div>
-
-    <div class="mb-3">
-        <label>Hora Inicio</label>
-
-        <input type="time"
-               name="hora_inicio"
-               class="form-control"
-               value="{{ $horario->hora_inicio }}">
-    </div>
-
-    <div class="mb-3">
-        <label>Hora Fin</label>
-
-        <input type="time"
-               name="hora_fin"
-               class="form-control"
-               value="{{ $horario->hora_fin }}">
-    </div>
-
-    <div class="mb-3">
-        <label>ID Entrenador</label>
-
-        <input type="number"
-               name="id_entrenador"
-               class="form-control"
-               value="{{ $horario->id_entrenador }}">
-    </div>
-
-    <button type="submit"
-            class="btn btn-primary">
-
-        Actualizar
-
-    </button>
-
-</form>
-
 </div>
-
-</body>
-</html>
+@endsection
